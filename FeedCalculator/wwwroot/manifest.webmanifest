@@ -1,0 +1,16 @@
+{
+  "name": "Калькулятар кармавых адзінак",
+  "short_name": "Кармавы калькулятар",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#198754",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}
+
