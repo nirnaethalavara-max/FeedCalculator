@@ -3,7 +3,14 @@
 <div class="container mt-4" style="max-width: 480px;">
     <div class="card shadow-sm p-4">
         <div class="alert alert-success text-center mb-4">
-            <div class="small text-uppercase fw-bold">Патрэба статку ў суткі</div>
+            <div class="small text-uppercase fw-bold">Патрэба статку на</div>
+            <input type="number" min="1" max="99999" inputmode="numeric" placeholder="1"
+                   class="form-control form-control-lg text-center"
+                   value="@calculator.Days"
+                   @oninput="OnDaysInput" />
+            <div class="small text-uppercase fw-bold">
+                @GetDaysWord(calculator.Days)
+            </div>
             <div class="display-5 fw-bold">@calculator.Calculate().ToString("F1")</div>
             <div>кармавых адзінак</div>
         </div>
@@ -42,6 +49,14 @@
                    @oninput="OnPregnantCowsInput" />
         </div>
 
+        <div>
+            <label>Быкі: </label>
+            <input type="number" min="0" max="99999" inputmode="numeric" placeholder="0"
+                   class="form-control form-control-lg text-center"
+                   value="@calculator.MaleCows"
+                   @oninput="OnMaleCowsInput" />
+        </div>
+
         <button type="button" class="btn btn-outline-danger btn-lg w-100 mt-2" @onclick="calculator.Reset">Ачысціць</button>
     </div>
 </div>
@@ -66,6 +81,14 @@
     {
         calculator.PregnantCows = FilterInput(e.Value?.ToString(), calculator.PregnantCows);
     }
+    private void OnMaleCowsInput(ChangeEventArgs e)
+    {
+        calculator.MaleCows = FilterInput(e.Value?.ToString(), calculator.MaleCows);
+    }
+    private void OnDaysInput(ChangeEventArgs e)
+    {
+        calculator.Days = FilterInput(e.Value?.ToString(), calculator.Days);
+    }
     private int? FilterInput(string? rawText, int? previousValue)
     {
         if (string.IsNullOrWhiteSpace(rawText))
@@ -75,6 +98,23 @@
             return number;
 
         return previousValue;
+    }
+    private string GetDaysWord(int? days)
+    {
+        int value = days ?? 1; // Калі поле пустое (null), выкарыстоўваецца 1 (верне "дзень")
+
+        int lastTwo = value % 100;
+        if (lastTwo >= 11 && lastTwo <= 14)
+        {
+            return "дзён";
+        }
+
+        return (value % 10) switch
+        {
+            1 => "дзень",
+            2 or 3 or 4 => "дні",
+            _ => "дзён"
+        };
     }
 
 
